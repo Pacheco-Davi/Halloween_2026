@@ -1,0 +1,35 @@
+{
+  "whatsapp": "5531999999999",
+  "lotes": [
+    {
+      "nome": "1º lote",
+      "descricao": "Festa de sábado à noite",
+      "preco": 60,
+      "vendidos": 0,
+      "total": 10,
+      "aberto": true,
+      "prazo": "Até 10/10 ou até esgotar",
+      "pix": "00020126580014br.gov.bcb.pix01369751f2e3-9537-4b2d-8208-54be1f7e262e520400005303986540560.005802BR5923DAVI PACHECO NEPOMUCENO6009Sao Paulo62290525REC6AC418BAA00A26961446356304025C"
+    },
+    {
+      "nome": "2º lote",
+      "descricao": "Festa de sábado à noite",
+      "preco": 70,
+      "vendidos": 0,
+      "total": 10,
+      "aberto": false,
+      "prazo": "Abre quando o 1º lote esgotar",
+      "pix": "00020126580014br.gov.bcb.pix01369751f2e3-9537-4b2d-8208-54be1f7e262e520400005303986540570.005802BR5923DAVI PACHECO NEPOMUCENO6009Sao Paulo62290525REC6AC4194524548628525393630468BB"
+    },
+    {
+      "nome": "Festa + pernoite",
+      "descricao": "Festa, dormir aqui, café da manhã e churrasco no domingo",
+      "preco": 100,
+      "vendidos": 0,
+      "total": 10,
+      "aberto": true,
+      "prazo": "Vagas limitadas pelo espaço da casa",
+      "pix": "00020126580014br.gov.bcb.pix01369751f2e3-9537-4b2d-8208-54be1f7e262e5204000053039865406100.005802BR5923DAVI PACHECO NEPOMUCENO6009Sao Paulo62290525REC6AC4197C138D799582269363046427"
+    }
+  ]
+}
