@@ -48,14 +48,22 @@
       position: relative;
       padding-top: 4.5rem;
     }
-    .topo::before {                 /* a lua: um círculo com degradê */
+    /* A lua minguante. Truque: um círculo TRANSPARENTE com uma sombra deslocada.
+       A sombra externa nunca é pintada por baixo do próprio círculo, então só
+       sobra a "fatia" que escapa para o lado: a meia-lua.
+       No hemisfério sul, a minguante tem o lado iluminado à direita. */
+    .topo::before {
       content: "";
       position: absolute;
-      top: 1.5rem; right: -2rem;
-      width: 11rem; height: 11rem;
+      top: 1.75rem; right: 3.25rem;
+      width: 6.5rem; height: 6.5rem;
       border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #fff6df, #e9d9b8 60%, #c9b48d);
-      opacity: .16;
+      background: transparent;
+      box-shadow: 1.5rem -.35rem 0 0 #F6E7C1;          /* deslocamento x, y: a fatia da lua */
+      filter:
+        drop-shadow(0 0 10px rgba(255, 222, 160, .7))   /* brilho perto da lua */
+        drop-shadow(0 0 40px rgba(240, 127, 42, .35));  /* halo alaranjado mais aberto */
+      transform: rotate(-12deg);                        /* inclina levemente, mais natural */
       z-index: -1;
     }
     .topo h1 {
