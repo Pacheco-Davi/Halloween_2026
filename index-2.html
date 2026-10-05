@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Noite de Halloween · 31/10</title>
+  <!-- Descrição que aparece na prévia do link no WhatsApp -->
+  <meta name="description" content="Festa à fantasia com open bar, petiscos e churrasco no domingo. Garanta seu ingresso.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎃</text></svg>">
+
+  <!-- Fontes: Pirata One (títulos, ar gótico) + Figtree (texto, bem legível no celular) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;800&family=Pirata+One&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== 1. TOKENS: as "tintas" do site. Mude aqui e muda no site todo. ===== */
+    :root {
+      --noite:  #1E1428;  /* fundo */
+      --ameixa: #2B1F3B;  /* ingressos e caixas */
+      --abobora:#F07F2A;  /* destaque principal */
+      --vela:   #FFD166;  /* brilho da barra */
+      --osso:   #F3EADF;  /* texto principal */
+      --nevoa:  #A99BBE;  /* texto secundário */
+      --raio: 14px;
+    }
+
+    /* ===== 2. BASE ===== */
+    * { box-sizing: border-box; margin: 0; }
+    body {
+      background: var(--noite);
+      color: var(--osso);
+      font: 400 1.0625rem/1.55 "Figtree", system-ui, sans-serif;
+      padding: 0 1.25rem 4rem;
+    }
+    main { max-width: 34rem; margin: 0 auto; }
+    section { margin-top: 3.5rem; }
+    h2 {
+      font: 400 2rem/1.1 "Pirata One", Georgia, serif;
+      color: var(--abobora);
+      margin-bottom: 1rem;
+    }
+    p + p { margin-top: .75rem; }
+    .fraco { color: var(--nevoa); }
+
+    /* ===== 3. TOPO (hero) com uma lua atrás do título ===== */
+    .topo {
+      position: relative;
+      padding-top: 4.5rem;
+    }
+    /* A lua minguante. Truque: um círculo TRANSPARENTE com uma sombra deslocada.
+       A sombra externa nunca é pintada por baixo do próprio círculo, então só
+       sobra a "fatia" que escapa para o lado: a meia-lua.
+       No hemisfério sul, a minguante tem o lado iluminado à direita. */
+    .topo::before {
+      content: "";
+      position: absolute;
+      top: 1.75rem; right: 3.25rem;
+      width: 6.5rem; height: 6.5rem;
+      border-radius: 50%;
+      background: transparent;
+      box-shadow: 1.5rem -.35rem 0 0 #F6E7C1;          /* deslocamento x, y: a fatia da lua */
+      filter:
+        drop-shadow(0 0 10px rgba(255, 222, 160, .7))   /* brilho perto da lua */
+        drop-shadow(0 0 40px rgba(240, 127, 42, .35));  /* halo alaranjado mais aberto */
+      transform: rotate(-12deg);                        /* inclina levemente, mais natural */
+      z-index: -1;
+    }
+    .topo h1 {
+      font: 400 clamp(3.4rem, 17vw, 5.5rem)/.9 "Pirata One", Georgia, serif;
+      color: var(--osso);
+      text-shadow: 0 0 28px rgba(240, 127, 42, .45);
+      animation: tremula 2.4s ease-out 1;   /* um único "tremular" de vela ao abrir */
+    }
+    .topo .quando {
+      margin-top: 1.25rem;
+      font-weight: 800;
+      font-size: 1.25rem;
+    }
+    @keyframes tremula {
+      0%   { opacity: 0; text-shadow: none; }
+      30%  { opacity: 1; }
+      45%  { text-shadow: 0 0 6px rgba(240,127,42,.2); }
+      60%  { text-shadow: 0 0 34px rgba(240,127,42,.6); }
+      100% { text-shadow: 0 0 28px rgba(240,127,42,.45); }
+    }
+
+    /* ===== 4. LISTA "O que está incluso" ===== */
+    .incluso { list-style: none; padding: 0; }
+    .incluso li {
+      padding: .6rem 0;
+      border-bottom: 1px solid rgba(169, 155, 190, .2);
+    }
+
+    /* ===== 5. INGRESSOS: o elemento principal da página ===== */
+    .ingressos { display: grid; gap: 1rem; }
+    .ingresso {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      background: var(--ameixa);
+      border-radius: var(--raio);
+    }
+    .ingresso-info  { padding: 1.1rem 1.1rem 1.2rem; }
+    .ingresso-preco {
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      gap: .6rem;
+      padding: 1rem;
+      border-left: 2px dashed rgba(169, 155, 190, .35);  /* o "picote" do ingresso */
+    }
+    /* os dois semicírculos do picote, na cor do fundo */
+    .ingresso::before, .ingresso::after {
+      content: "";
+      position: absolute;
+      right: calc(var(--largura-canhoto, 8.25rem) - 11px);
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--noite);
+    }
+    .ingresso::before { top: -10px; }
+    .ingresso::after  { bottom: -10px; }
+    .ingresso-preco { width: var(--largura-canhoto, 8.25rem); padding: 1rem .75rem; }
+
+    .ingresso h3 { font-size: 1.2rem; font-weight: 800; }
+    .ingresso .desc { font-size: .95rem; color: var(--nevoa); }
+    .valor { font-size: 1.5rem; font-weight: 800; white-space: nowrap; }
+    .ingresso-preco .btn { white-space: nowrap; }
+
+    /* barra de vagas, como uma vela acendendo */
+    .barra {
+      margin-top: .9rem;
+      height: 8px;
+      border-radius: 99px;
+      background: rgba(169, 155, 190, .18);
+      overflow: hidden;
+    }
+    .barra span {
+      display: block; height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--abobora), var(--vela));
+      box-shadow: 0 0 12px rgba(255, 209, 102, .6);
+      transition: width .8s ease-out;
+    }
+    .vagas { margin-top: .45rem; font-size: .9rem; }
+    .vagas.acabando { color: var(--vela); font-weight: 600; }
+    .prazo { margin-top: .2rem; font-size: .85rem; color: var(--nevoa); }
+
+    .btn {
+      display: inline-block;
+      padding: .55rem .9rem;
+      border-radius: 99px;
+      background: var(--abobora);
+      color: var(--noite);
+      font-weight: 800;
+      font-size: .95rem;
+      text-decoration: none;
+      text-align: center;
+      border: 0;                 /* <button> vem com borda e fonte próprias; aqui zeramos */
+      font-family: inherit;
+      cursor: pointer;
+    }
+    .btn:hover { background: var(--vela); }
+    .btn:focus-visible { outline: 3px solid var(--vela); outline-offset: 3px; }
+    .btn[aria-disabled="true"] {
+      background: transparent;
+      color: var(--nevoa);
+      border: 1px solid rgba(169, 155, 190, .4);
+      pointer-events: none;
+    }
+    .ingresso.fechado { opacity: .7; }
+
+    /* ===== 6. PASSOS DO PAGAMENTO (é uma sequência de verdade, então tem número) ===== */
+    .passos { padding-left: 1.3rem; }
+    .passos li { padding: .35rem 0; }
+    .passos li::marker { color: var(--abobora); font-weight: 800; }
+
+    /* ===== 7. PERGUNTAS (abre e fecha sem JavaScript) ===== */
+    details {
+      background: var(--ameixa);
+      border-radius: var(--raio);
+      padding: .9rem 1.1rem;
+    }
+    details + details { margin-top: .6rem; }
+    summary { font-weight: 600; cursor: pointer; }
+    details p { margin-top: .6rem; color: var(--nevoa); }
+
+    footer { margin-top: 3.5rem; font-size: .85rem; color: var(--nevoa); }
+    footer a { color: var(--abobora); }
+
+    /* ===== 8. JANELA DE PAGAMENTO (o <dialog> é uma janela nativa do navegador) ===== */
+    dialog {
+      margin: auto;              /* devolve a centralização que o "* { margin: 0 }" tirou */
+      width: min(30rem, calc(100% - 2rem));
+      max-height: calc(100% - 2rem);
+      border: 0;
+      border-radius: var(--raio);
+      background: var(--ameixa);
+      color: var(--osso);
+      padding: 1.4rem 1.25rem 1.25rem;
+    }
+    dialog::backdrop { background: rgba(10, 6, 16, .75); }   /* escurece o site por trás */
+    dialog h3 { font: 400 1.9rem/1.1 "Pirata One", Georgia, serif; color: var(--abobora); }
+    .pg-valor { font-weight: 800; font-size: 1.15rem; margin-top: .2rem; }
+    .pg-etapa { margin-top: 1.2rem; font-weight: 600; }
+    .pg-etapa span { color: var(--abobora); }
+
+    .copia {
+      display: flex; gap: .5rem;
+      margin-top: .5rem;
+    }
+    .copia input {
+      flex: 1; min-width: 0;
+      padding: .6rem .7rem;
+      border: 1px solid rgba(169, 155, 190, .35);
+      border-radius: 10px;
+      background: var(--noite);
+      color: var(--nevoa);
+      font: inherit; font-size: .85rem;
+    }
+    .btn-sec {
+      padding: .55rem .9rem;
+      border: 1px solid var(--abobora);
+      border-radius: 99px;
+      background: transparent;
+      color: var(--abobora);
+      font: 800 .95rem "Figtree", sans-serif;
+      cursor: pointer;
+    }
+    .btn-sec:focus-visible { outline: 3px solid var(--vela); outline-offset: 3px; }
+
+    /* QR com fundo branco: leitores de QR precisam de contraste claro */
+    .qr {
+      width: fit-content;
+      margin-top: .6rem;
+      padding: .7rem;
+      background: #fff;
+      border-radius: 10px;
+    }
+    .qr-aviso { font-size: .85rem; color: var(--nevoa); margin-top: .9rem; }
+
+    .pg-acoes { display: grid; gap: .6rem; margin-top: 1.4rem; }
+    .pg-acoes .btn { padding: .75rem 1rem; font-size: 1rem; }
+    .fechar {
+      background: none; border: 0;
+      color: var(--nevoa);
+      font: inherit; font-size: .95rem;
+      cursor: pointer; padding: .4rem;
+    }
+
+    /* Quem pediu menos animação no celular não vê o tremular */
+    @media (prefers-reduced-motion: reduce) {
+      .topo h1 { animation: none; }
+      .barra span { transition: none; }
+    }
+  </style>
+</head>
+<body>
+<main>
+
+  <header class="topo">
+    <h1>Noite de Halloween</h1>
+    <p class="quando">Sábado, 31 de outubro, a partir das 20h</p>
+    <p class="fraco">Pampulha, BH. O endereço chega no seu WhatsApp depois do pagamento.</p>
+  </header>
+
+  <section>
+    <h2>O que está incluso</h2>
+    <ul class="incluso">
+      <li>Open bar de drinks: caipirinha, tangerina e morango</li>
+      <li>Bebidas sem álcool</li>
+      <li>Petiscos, salgados e cachorro-quente</li>
+      <li>Casa decorada, luz neon e música a noite toda</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Ingressos</h2>
+    <!-- O JavaScript lá embaixo preenche esta div com os ingressos do lotes.json -->
+    <div class="ingressos" id="ingressos">
+      <p class="fraco">Carregando ingressos...</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Como garantir</h2>
+    <ol class="passos">
+      <li>Escolha seu ingresso e toque em Garantir.</li>
+      <li>Copie o código Pix e pague no app do seu banco.</li>
+      <li>Toque em Já paguei e mande o comprovante no WhatsApp.</li>
+      <li>Confirmei: seu nome entra na lista e você recebe o endereço.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Perguntas</h2>
+    <details>
+      <summary>Preciso ir fantasiado?</summary>
+      <p>É uma festa à fantasia, então capricha.</p>
+    </details>
+    <details>
+      <summary>Posso dormir aí?</summary>
+      <p>Pode, com o ingresso Festa + pernoite. Ele inclui café da manhã e o churrasco de domingo, e assim você volta de Uber de dia, que sai mais barato.</p>
+    </details>
+    <details>
+      <summary>Por que o endereço não está aqui?</summary>
+      <p>Porque é uma festa em casa. O endereço vai só para quem já garantiu o ingresso.</p>
+    </details>
+    <details>
+      <summary>E se o lote virar enquanto eu pagava?</summary>
+      <p>Vale o preço que você pagou. Sem cobrança de diferença.</p>
+    </details>
+  </section>
+
+  <footer>Dúvidas? <a id="link-duvidas" href="#" target="_blank" rel="noopener">Chama no WhatsApp</a>.</footer>
+</main>
+
+<!-- Janela de pagamento: começa escondida e o JavaScript preenche e abre -->
+<dialog id="pagamento" aria-labelledby="pg-titulo">
+  <h3 id="pg-titulo"></h3>
+  <p class="pg-valor" id="pg-valor"></p>
+
+  <p class="pg-etapa"><span>1.</span> Copie o código e pague no app do seu banco</p>
+  <div class="copia">
+    <input id="pg-codigo" type="text" readonly aria-label="Código Pix copia e cola">
+    <button class="btn-sec" id="pg-copiar" type="button" autofocus>Copiar</button>
+  </div>
+  <div id="pg-bloco-qr">
+    <p class="qr-aviso">Está no computador? Escaneie com o celular:</p>
+    <div class="qr" id="pg-qr"></div>
+  </div>
+
+  <p class="pg-etapa"><span>2.</span> Depois de pagar, mande o comprovante</p>
+  <div class="pg-acoes">
+    <a class="btn" id="pg-whatsapp" href="#" target="_blank" rel="noopener">Já paguei</a>
+    <button class="fechar" id="pg-fechar" type="button">Voltar</button>
+  </div>
+</dialog>
+
+<!-- Biblioteca que desenha o QR Code a partir do texto do Pix -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script>
+  /* ===== 9. DADOS DE RESERVA =====
+     Se o lotes.json não carregar (ex.: você abriu o arquivo direto do
+     computador), a página usa estes valores para não ficar vazia. */
+  const RESERVA = {
+    whatsapp: "5531999999999",
+    lotes: [
+      { nome: "1º lote", descricao: "Festa de sábado à noite", preco: 60, vendidos: 0, total: 10, aberto: true,  prazo: "Até 10/10 ou até esgotar", pix: "00020126580014br.gov.bcb.pix01369751f2e3-9537-4b2d-8208-54be1f7e262e520400005303986540560.005802BR5923DAVI PACHECO NEPOMUCENO6009Sao Paulo62290525REC6AC418BAA00A26961446356304025C" },
+      { nome: "2º lote", descricao: "Festa de sábado à noite", preco: 70, vendidos: 0, total: 10, aberto: false, prazo: "Abre quando o 1º lote esgotar", pix: "00020126580014br.gov.bcb.pix01369751f2e3-9537-4b2d-8208-54be1f7e262e520400005303986540570.005802BR5923DAVI PACHECO NEPOMUCENO6009Sao Paulo62290525REC6AC4194524548628525393630468BB" },
+      { nome: "Festa + pernoite", descricao: "Festa, dormir aqui, café da manhã e churrasco no domingo", preco: 100, vendidos: 0, total: 10, aberto: true, prazo: "Vagas limitadas pelo espaço da casa", pix: "00020126580014br.gov.bcb.pix01369751f2e3-9537-4b2d-8208-54be1f7e262e5204000053039865406100.005802BR5923DAVI PACHECO NEPOMUCENO6009Sao Paulo62290525REC6AC4197C138D799582269363046427" }
+    ]
+  };
+
+  /* ===== 10. BUSCAR O lotes.json =====
+     fetch = "vai lá na pasta e me traz esse arquivo".
+     cache: "no-store" = sempre pega a versão mais nova, nunca uma cópia velha. */
+  async function carregarDados() {
+    try {
+      const resposta = await fetch("lotes.json", { cache: "no-store" });
+      if (!resposta.ok) throw new Error("lotes.json não encontrado");
+      return await resposta.json();
+    } catch (erro) {
+      console.warn("Usando dados de reserva:", erro.message);
+      return RESERVA;
+    }
+  }
+
+  /* ===== 11. LINKS DO WHATSAPP =====
+     wa.me/<número>?text=<mensagem> abre a conversa com o texto já digitado.
+     encodeURIComponent troca espaços e acentos por códigos que cabem num link. */
+  function linkWhatsApp(numero, mensagem) {
+    return `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
+  }
+  function msgComprovante(lote) {
+    return `Oi! Paguei o ingresso "${lote.nome}" (R$ ${lote.preco}) da Noite de Halloween. Segue o comprovante. Meu nome é: `;
+  }
+
+  /* ===== 12. DESENHAR UM INGRESSO =====
+     Recebe um lote do JSON e devolve o HTML do cartão. */
+  function htmlIngresso(lote, indice) {
+    const restam   = Math.max(lote.total - lote.vendidos, 0);
+    const esgotado = restam === 0;
+    const aberto   = lote.aberto && !esgotado;
+    const porcento = Math.min((lote.vendidos / lote.total) * 100, 100);
+    const acabando = aberto && restam <= 3;   // 3 ou menos: texto fica amarelo
+
+    let textoVagas;
+    if (esgotado)      textoVagas = "Esgotado";
+    else if (!aberto)  textoVagas = `${lote.total} vagas`;
+    else if (restam === 1) textoVagas = `${lote.vendidos} de ${lote.total} garantidos. Resta 1 vaga!`;
+    else               textoVagas = `${lote.vendidos} de ${lote.total} garantidos. Restam ${restam}.`;
+
+    const botao = aberto
+      ? `<button class="btn" type="button" data-lote="${indice}">Garantir</button>`
+      : `<span class="btn" aria-disabled="true">${esgotado ? "Esgotado" : "Em breve"}</span>`;
+
+    return `
+      <article class="ingresso ${aberto ? "" : "fechado"}">
+        <div class="ingresso-info">
+          <h3>${lote.nome}</h3>
+          <p class="desc">${lote.descricao}</p>
+          <div class="barra" role="progressbar" aria-valuemin="0" aria-valuemax="${lote.total}" aria-valuenow="${lote.vendidos}" aria-label="Vagas garantidas">
+            <span style="width:${porcento}%"></span>
+          </div>
+          <p class="vagas ${acabando ? "acabando" : ""}">${textoVagas}</p>
+          ${lote.prazo ? `<p class="prazo">${lote.prazo}</p>` : ""}
+        </div>
+        <div class="ingresso-preco">
+          <span class="valor">R$ ${lote.preco}</span>
+          ${botao}
+        </div>
+      </article>`;
+  }
+
+  /* ===== 13. JANELA DE PAGAMENTO =====
+     Preenche a janela com o lote escolhido e abre. */
+  const janela = document.getElementById("pagamento");
+
+  function abrirPagamento(lote, numero) {
+    document.getElementById("pg-titulo").textContent = lote.nome;
+    document.getElementById("pg-valor").textContent  = `R$ ${lote.preco}`;
+    document.getElementById("pg-codigo").value       = lote.pix;
+    document.getElementById("pg-whatsapp").href      = linkWhatsApp(numero, msgComprovante(lote));
+
+    // Desenha o QR a partir do mesmo texto do copia-e-cola.
+    // Se a biblioteca não carregou (sem internet), a caixa do QR some e o copia-e-cola continua.
+    const caixaQR = document.getElementById("pg-qr");
+    caixaQR.innerHTML = "";
+    if (window.QRCode) {
+      new QRCode(caixaQR, { text: lote.pix, width: 180, height: 180, correctLevel: QRCode.CorrectLevel.M });
+    } else {
+      document.getElementById("pg-bloco-qr").hidden = true;
+    }
+
+    janela.showModal();   // abre como "modal": trava o fundo e prende o foco do teclado na janela
+  }
+
+  /* Copiar o código. navigator.clipboard é a área de transferência do aparelho.
+     Se o navegador recusar, selecionamos o texto para a pessoa copiar na mão. */
+  document.getElementById("pg-copiar").addEventListener("click", async (e) => {
+    const campo = document.getElementById("pg-codigo");
+    try {
+      await navigator.clipboard.writeText(campo.value);
+      e.target.textContent = "Copiado";
+      setTimeout(() => (e.target.textContent = "Copiar"), 2000);
+    } catch {
+      campo.select();
+    }
+  });
+
+  document.getElementById("pg-fechar").addEventListener("click", () => janela.close());
+  // Tocar fora da janela (no fundo escuro) também fecha
+  janela.addEventListener("click", (e) => { if (e.target === janela) janela.close(); });
+
+  /* ===== 14. JUNTAR TUDO ===== */
+  async function iniciar() {
+    const dados = await carregarDados();
+    const caixa = document.getElementById("ingressos");
+    caixa.innerHTML = dados.lotes.map((l, i) => htmlIngresso(l, i)).join("");
+
+    // "Delegação de eventos": em vez de um ouvinte por botão, um só na caixa,
+    // que descobre qual botão foi tocado pelo data-lote. Como um porteiro só
+    // para o prédio inteiro, em vez de um em cada apartamento.
+    caixa.addEventListener("click", (e) => {
+      const botao = e.target.closest("[data-lote]");
+      if (botao) abrirPagamento(dados.lotes[botao.dataset.lote], dados.whatsapp);
+    });
+
+    document.getElementById("link-duvidas").href =
+      linkWhatsApp(dados.whatsapp, "Oi! Tenho uma dúvida sobre a Noite de Halloween.");
+  }
+
+  iniciar();
+</script>
+</body>
+</html>
