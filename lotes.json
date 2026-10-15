@@ -5,8 +5,8 @@
       "nome": "1º lote",
       "descricao": "Festa de sábado à noite",
       "preco": 60,
-      "vendidos": 2,
-      "total": 10,
+      "vendidos": 7,
+      "total": 20,
       "aberto": true,
       "prazo": "Até 15/10 ou até esgotar",
       "pix": "00020126580014br.gov.bcb.pix01369751f2e3-9537-4b2d-8208-54be1f7e262e520400005303986540560.005802BR5923DAVI PACHECO NEPOMUCENO6009Sao Paulo62290525REC6AC418BAA00A26961446356304025C"
@@ -14,7 +14,7 @@
     {
       "nome": "2º lote",
       "descricao": "Festa de sábado à noite",
-      "preco": 70,
+      "preco": 65,
       "vendidos": 0,
       "total": 10,
       "aberto": false,
@@ -28,7 +28,7 @@
       "vendidos": 0,
       "total": 10,
       "aberto": true,
-      "prazo": "Até 15/10 ou até esgotar",
+      "prazo": "Até 30/10 ou até esgotar",
       "pix": "00020126580014br.gov.bcb.pix01369751f2e3-9537-4b2d-8208-54be1f7e262e5204000053039865406100.005802BR5923DAVI PACHECO NEPOMUCENO6009Sao Paulo62290525REC6AC4197C138D799582269363046427"
     }
   ]
