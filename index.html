@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Avisa o navegador que o site já é escuro, para ele não aplicar o "modo escuro forçado" por cima -->
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#1E1428">
   <title>Noite de Halloween · 31/10</title>
   <!-- Descrição que aparece na prévia do link no WhatsApp -->
   <meta name="description" content="Festa à fantasia com open bar, petiscos e churrasco no domingo. Garanta seu ingresso.">
@@ -16,6 +19,7 @@
   <style>
     /* ===== 1. TOKENS: as "tintas" do site. Mude aqui e muda no site todo. ===== */
     :root {
+      color-scheme: dark;  /* o site é escuro de propósito: não escurecer de novo */
       --noite:  #1E1428;  /* fundo */
       --ameixa: #2B1F3B;  /* ingressos e caixas */
       --abobora:#F07F2A;  /* destaque principal */
