@@ -344,21 +344,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <script>
-  /* ===== 9. DADOS DE RESERVA =====
-     Se o lotes.json não carregar (ex.: você abriu o arquivo direto do
-     computador), a página usa estes valores para não ficar vazia. */
+  /* ===== 9. DADOS DE RESERVA ===== */
   const RESERVA = {
     whatsapp: "5531991452714",
     lotes: [
       { nome: "1º lote", descricao: "Festa de sábado à noite", preco: 60, vendidos: 7, total: 20, aberto: false, encerrado: true, prazo: "Encerrado em 15/10", pix: "00020126580014br.gov.bcb.pix01369751f2e3-9537-4b2d-8208-54be1f7e262e520400005303986540560.005802BR5923DAVI PACHECO NEPOMUCENO6009Sao Paulo62290525REC6AC418BAA00A26961446356304025C" },
-      { nome: "2º lote", descricao: "Festa de sábado à noite", preco: 65, vendidos: 0, total: 10, aberto: true, prazo: "Até 24/10 ou até esgotar", pix: "00020126580014br.gov.bcb.pix01369751f2e3-9537-4b2d-8208-54be1f7e262e520400005303986540565.005802BR5923DAVI PACHECO NEPOMUCENO6009Sao Paulo62290525REC6AD134FB27B792764902876304A625" },
-      { nome: "Festa + pernoite", descricao: "Festa, dormir aqui, café da manhã e churrasco no domingo", preco: 100, vendidos: 0, total: 10, aberto: true, prazo: "Até 30/10 ou até esgotar", pix: "00020126580014br.gov.bcb.pix01369751f2e3-9537-4b2d-8208-54be1f7e262e5204000053039865406100.005802BR5923DAVI PACHECO NEPOMUCENO6009Sao Paulo62290525REC6AC4197C138D799582269363046427" }
+      { nome: "2º lote", descricao: "Festa de sábado à noite", preco: 65, vendidos: 0, total: 10, aberto: true, prazo: "Até 29/10 ou até esgotar", pix: "00020126580014br.gov.bcb.pix01369751f2e3-9537-4b2d-8208-54be1f7e262e520400005303986540565.005802BR5923DAVI PACHECO NEPOMUCENO6009Sao Paulo62290525REC6AD134FB27B792764902876304A625" },
+      { nome: "Festa + pernoite", descricao: "Festa, dormir aqui, café da manhã e churrasco no domingo", preco: 100, vendidos: 0, total: 10, aberto: true, prazo: "Até 29/10 ou até esgotar", pix: "00020126580014br.gov.bcb.pix01369751f2e3-9537-4b2d-8208-54be1f7e262e5204000053039865406100.005802BR5923DAVI PACHECO NEPOMUCENO6009Sao Paulo62290525REC6AC4197C138D799582269363046427" }
     ]
   };
 
-  /* ===== 10. BUSCAR O lotes.json =====
-     fetch = "vai lá na pasta e me traz esse arquivo".
-     cache: "no-store" = sempre pega a versão mais nova, nunca uma cópia velha. */
+  /* ===== 10. BUSCAR O lotes.json ===== */
   async function carregarDados() {
     try {
       const resposta = await fetch("lotes.json", { cache: "no-store" });
@@ -370,9 +366,7 @@
     }
   }
 
-  /* ===== 11. LINKS DO WHATSAPP =====
-     wa.me/<número>?text=<mensagem> abre a conversa com o texto já digitado.
-     encodeURIComponent troca espaços e acentos por códigos que cabem num link. */
+  /* ===== 11. LINKS DO WHATSAPP ===== */
   function linkWhatsApp(numero, mensagem) {
     return `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
   }
@@ -380,8 +374,7 @@
     return `Oi! Paguei o ingresso "${lote.nome}" (R$ ${lote.preco}) da Noite de Halloween. Segue o comprovante. Meu nome é: `;
   }
 
-  /* ===== 12. DESENHAR UM INGRESSO =====
-     Recebe um lote do JSON e devolve o HTML do cartão. */
+  /* ===== 12. DESENHAR UM INGRESSO ===== */
   function htmlIngresso(lote, indice) {
     const restam    = Math.max(lote.total - lote.vendidos, 0);
     const esgotado  = restam === 0;
@@ -429,8 +422,6 @@
     document.getElementById("pg-codigo").value       = lote.pix;
     document.getElementById("pg-whatsapp").href      = linkWhatsApp(numero, msgComprovante(lote));
 
-    // Desenha o QR a partir do mesmo texto do copia-e-cola.
-    // Se a biblioteca não carregou (sem internet), a caixa do QR some e o copia-e-cola continua.
     const caixaQR = document.getElementById("pg-qr");
     caixaQR.innerHTML = "";
     if (window.QRCode) {
@@ -442,8 +433,6 @@
     janela.showModal();   // abre como "modal": trava o fundo e prende o foco do teclado na janela
   }
 
-  /* Copiar o código. navigator.clipboard é a área de transferência do aparelho.
-     Se o navegador recusar, selecionamos o texto para a pessoa copiar na mão. */
   document.getElementById("pg-copiar").addEventListener("click", async (e) => {
     const campo = document.getElementById("pg-codigo");
     try {
@@ -465,9 +454,6 @@
     const caixa = document.getElementById("ingressos");
     caixa.innerHTML = dados.lotes.map((l, i) => htmlIngresso(l, i)).join("");
 
-    // "Delegação de eventos": em vez de um ouvinte por botão, um só na caixa,
-    // que descobre qual botão foi tocado pelo data-lote. Como um porteiro só
-    // para o prédio inteiro, em vez de um em cada apartamento.
     caixa.addEventListener("click", (e) => {
       const botao = e.target.closest("[data-lote]");
       if (botao) abrirPagamento(dados.lotes[botao.dataset.lote], dados.whatsapp);
