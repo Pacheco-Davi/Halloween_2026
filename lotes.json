@@ -7,8 +7,8 @@
       "preco": 60,
       "vendidos": 7,
       "total": 20,
-      "aberto": true,
-      "encerrado": false,
+      "aberto": false,
+      "encerrado": true,
       "prazo": "Encerrado em 15/10",
       "pix": "00020126580014br.gov.bcb.pix01369751f2e3-9537-4b2d-8208-54be1f7e262e520400005303986540560.005802BR5923DAVI PACHECO NEPOMUCENO6009Sao Paulo62290525REC6AC418BAA00A26961446356304025C"
     },
@@ -18,7 +18,7 @@
       "preco": 65,
       "vendidos": 0,
       "total": 10,
-      "aberto": false,
+      "aberto": true,
       "prazo": "Até 24/10 ou até esgotar",
       "pix": "00020126580014br.gov.bcb.pix01369751f2e3-9537-4b2d-8208-54be1f7e262e520400005303986540565.005802BR5923DAVI PACHECO NEPOMUCENO6009Sao Paulo62290525REC6AD134FB27B792764902876304A625"
     },
