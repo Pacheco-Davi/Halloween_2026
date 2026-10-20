@@ -23,6 +23,27 @@
       "pix": "00020126580014br.gov.bcb.pix01369751f2e3-9537-4b2d-8208-54be1f7e262e520400005303986540565.005802BR5923DAVI PACHECO NEPOMUCENO6009Sao Paulo62290525REC6AD134FB27B792764902876304A625"
     },
     {
+      "nome": "Leve sua garrafa",
+      "descricao": "Festa de sábado à noite. No dia, traga 1 L de bebida alcoólica ou 2 engradados de cerveja.",
+      "preco": 10,
+      "extra": "+ bebida",
+      "vendidos": 0,
+      "total": 10,
+      "aberto": true,
+      "prazo": "Até 29/10 ou até esgotar",
+      "pix": "00020126580014br.gov.bcb.pix01369751f2e3-9537-4b2d-8208-54be1f7e262e520400005303986540510.005802BR5923DAVI PACHECO NEPOMUCENO6009Sao Paulo62290525REC6AD7DDBE213F94341427816304689A"
+    },
+    {
+      "nome": "Sem álcool",
+      "descricao": "Festa de sábado à noite, para quem não bebe álcool. Inclui petiscos, refri e suco.",
+      "preco": 30,
+      "vendidos": 3,
+      "total": 10,
+      "aberto": true,
+      "prazo": "Até 29/10 ou até esgotar",
+      "pix": "00020126580014br.gov.bcb.pix01369751f2e3-9537-4b2d-8208-54be1f7e262e520400005303986540530.005802BR5923DAVI PACHECO NEPOMUCENO6009Sao Paulo62290525REC6AD7DDD722C9631737883863049EC7"
+    },
+    {
       "nome": "Festa + pernoite",
       "descricao": "Festa, dormir aqui, café da manhã e churrasco no domingo",
       "preco": 100,
