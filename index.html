@@ -128,6 +128,8 @@
     .ingresso h3 { font-size: 1.2rem; font-weight: 800; }
     .ingresso .desc { font-size: .95rem; color: var(--nevoa); }
     .valor { font-size: 1.5rem; font-weight: 800; white-space: nowrap; }
+    /* complemento do preço, ex.: "+ bebida" no ingresso "Leve sua garrafa" */
+    .valor-extra { font-size: .85rem; font-weight: 700; color: var(--abobora); margin-top: -.5rem; white-space: nowrap; }
     .ingresso-preco .btn { white-space: nowrap; }
 
     /* barra de vagas, como uma vela acendendo */
@@ -350,6 +352,8 @@
     lotes: [
       { nome: "1º lote", descricao: "Festa de sábado à noite", preco: 60, vendidos: 11, total: 20, aberto: false, encerrado: true, prazo: "Encerrado em 15/10", pix: "00020126580014br.gov.bcb.pix01369751f2e3-9537-4b2d-8208-54be1f7e262e520400005303986540560.005802BR5923DAVI PACHECO NEPOMUCENO6009Sao Paulo62290525REC6AC418BAA00A26961446356304025C" },
       { nome: "2º lote", descricao: "Festa de sábado à noite", preco: 65, vendidos: 0, total: 10, aberto: true, prazo: "Até 29/10 ou até esgotar", pix: "00020126580014br.gov.bcb.pix01369751f2e3-9537-4b2d-8208-54be1f7e262e520400005303986540565.005802BR5923DAVI PACHECO NEPOMUCENO6009Sao Paulo62290525REC6AD134FB27B792764902876304A625" },
+      { nome: "Leve sua garrafa", descricao: "Festa de sábado à noite. No dia, traga 1 L de bebida alcoólica ou 2 engradados de cerveja.", preco: 10, extra: "+ bebida", vendidos: 0, total: 10, aberto: true, prazo: "Até 29/10 ou até esgotar", pix: "00020126580014br.gov.bcb.pix01369751f2e3-9537-4b2d-8208-54be1f7e262e520400005303986540510.005802BR5923DAVI PACHECO NEPOMUCENO6009Sao Paulo62290525REC6AD7DDBE213F94341427816304689A" },
+      { nome: "Sem álcool", descricao: "Festa de sábado à noite, para quem não bebe álcool. Inclui petiscos, refri e suco.", preco: 30, vendidos: 3, total: 10, aberto: true, prazo: "Até 29/10 ou até esgotar", pix: "00020126580014br.gov.bcb.pix01369751f2e3-9537-4b2d-8208-54be1f7e262e520400005303986540530.005802BR5923DAVI PACHECO NEPOMUCENO6009Sao Paulo62290525REC6AD7DDD722C9631737883863049EC7" },
       { nome: "Festa + pernoite", descricao: "Festa, dormir aqui, café da manhã e churrasco no domingo", preco: 100, vendidos: 0, total: 10, aberto: true, prazo: "Até 29/10 ou até esgotar", pix: "00020126580014br.gov.bcb.pix01369751f2e3-9537-4b2d-8208-54be1f7e262e5204000053039865406100.005802BR5923DAVI PACHECO NEPOMUCENO6009Sao Paulo62290525REC6AC4197C138D799582269363046427" }
     ]
   };
@@ -371,7 +375,7 @@
     return `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
   }
   function msgComprovante(lote) {
-    return `Oi! Paguei o ingresso "${lote.nome}" (R$ ${lote.preco}) da Noite de Halloween. Segue o comprovante. Meu nome é: `;
+    return `Oi! Paguei o ingresso "${lote.nome}" (R$ ${lote.preco}${lote.extra ? " " + lote.extra : ""}) da Noite de Halloween. Segue o comprovante. Meu nome é: `;
   }
 
   /* ===== 12. DESENHAR UM INGRESSO ===== */
@@ -407,6 +411,7 @@
         </div>
         <div class="ingresso-preco">
           <span class="valor">R$ ${lote.preco}</span>
+          ${lote.extra ? `<span class="valor-extra">${lote.extra}</span>` : ""}
           ${botao}
         </div>
       </article>`;
@@ -418,7 +423,7 @@
 
   function abrirPagamento(lote, numero) {
     document.getElementById("pg-titulo").textContent = lote.nome;
-    document.getElementById("pg-valor").textContent  = `R$ ${lote.preco}`;
+    document.getElementById("pg-valor").textContent  = `R$ ${lote.preco}${lote.extra ? " " + lote.extra + " no dia" : ""}`;
     document.getElementById("pg-codigo").value       = lote.pix;
     document.getElementById("pg-whatsapp").href      = linkWhatsApp(numero, msgComprovante(lote));
 
